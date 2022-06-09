@@ -27,7 +27,8 @@ router.post('/', function(req, res, next) {
   const { title, price, thumbnail} =req.body
   let product = {"id":products.length +1, "title":title, "price": price, "thumbnail":thumbnail}
   products.push(product)
-  res.json(product)
+  // res.json(product)
+  res.render('index')
 });
 
 router.put('/', function(req, res, next) {

@@ -1,5 +1,18 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  h1= formProduct
+  form(method='POST' action='/api/products')
+              div.form-group
+                label(for='name') Title:
+                input#name.form-control(type='text', placeholder='Enter a title for the product' name='title')
+              div.form-group
+                label(for='price') Price:
+                input#price.form-control(type='number', placeholder='Enter a price for the product' name='price')
+              div.form-group
+                label(for='thumbnail') Thumbnail:
+                input#thumbnail.form-control(type='text', placeholder='Enter a thumbnail' name='thumbnail')
+              button.btn.btn-primary(type="submit") Send
+              button.btn.btn-primary(onclick="/") Send
+              
+
