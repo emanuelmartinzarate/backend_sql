@@ -4,7 +4,8 @@ var router = express.Router();
 let products = []
 
 router.get('/', function(req, res, next) {
-  res.json(products);
+  // res.json(products);
+  res.render('products',{formProduct:'Products List', products:products})
 });
 
 router.get('/:id', function(req, res, next) {
@@ -25,10 +26,10 @@ router.get('/:id', function(req, res, next) {
 
 router.post('/', function(req, res, next) {
   const { title, price, thumbnail} =req.body
-  let product = {"id":products.length +1, "title":title, "price": price, "thumbnail":thumbnail}
+  const id = products.length
+  let product = {"id":id +1, "title":title, "price": price, "thumbnail":thumbnail}
   products.push(product)
-  // res.json(product)
-  res.render('index')
+  res.render('index',{ title: 'E-commerce',formProduct:'Enter new Product' })
 });
 
 router.put('/', function(req, res, next) {
