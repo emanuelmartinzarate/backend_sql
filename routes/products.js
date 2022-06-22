@@ -1,11 +1,13 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const Contenedor = require('../contenedor')
+
+const contenedorProducts = new Contenedor('producs.json')
 
 let products = []
 
 router.get('/', function(req, res, next) {
-  // res.json(products);
-  res.render('products',{formProduct:'Products List', products:products})
+  res.render('products',{products:contenedorProducts.getAll()})
 });
 
 router.get('/:id', function(req, res, next) {

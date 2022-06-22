@@ -1,9 +1,0 @@
-extends layout
-
-block content
-  h1= formProduct
-  ul
-    each product in products
-        li= product.title
-    else
-        li The company doesn't have any products. Maybe buy some?
