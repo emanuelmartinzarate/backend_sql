@@ -30,7 +30,7 @@ btnSend.onclick = e => {
 }
 
 socket.on('show', products => {
-    console.log(products)
+    // console.log(products)
 
     fetch('/api/products')
         .then(r => r.text())

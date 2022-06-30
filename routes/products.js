@@ -1,13 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const Contenedor = require('../contenedor')
+// const Contenedor = require('../contenedor')
+const ContenedorMariaDB = require('../contenedorMariaDB')
 
-const contenedorProducts = new Contenedor('producs.json')
 
-let products = []
+// const contenedorProducts = new Contenedor('producs.json')
+const contenedorMariaDB = new ContenedorMariaDB()
 
 router.get('/', function(req, res, next) {
-  res.render('products',{products:contenedorProducts.getAll()})
+  res.json(contenedorMariaDB.getAll())
+  // res.render('products',{products:contenedorMariaDB.getAll()})
 });
 
 router.get('/:id', function(req, res, next) {
@@ -27,11 +29,9 @@ router.get('/:id', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
-  const { title, price, thumbnail} =req.body
-  const id = products.length
-  let product = {"id":id +1, "title":title, "price": price, "thumbnail":thumbnail}
-  products.push(product)
-  res.render('index',{ title: 'E-commerce',formProduct:'Enter new Product' })
+  const product =req.body
+  contenedorMariaDB.save(product)
+  res.json(product)
 });
 
 router.put('/', function(req, res, next) {

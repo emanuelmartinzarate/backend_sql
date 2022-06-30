@@ -8,10 +8,12 @@ const app = require('../app');
 const debug = require('debug')('backend-apirestful:server');
 const http = require('http');
 const { Server } = require("socket.io");
-const Contenedor = require('../contenedor')
+// const Contenedor = require('../contenedor')
+// const ContenedorMariaDB = require('../contenedorMariaDB')
 
-const contenedorMessages = new Contenedor('messages.json')
-const contenedorProducts = new Contenedor('producs.json')
+// const contenedorMessages = new Contenedor('messages.json')
+// const contenedorProducts = new Contenedor('producs.json')
+// const contenedorMariaDB = new ContenedorMariaDB()
 
 /**
  * Get port from environment and store in Express.
@@ -99,30 +101,30 @@ function onListening() {
   debug('Listening on ' + bind);
 }
 
-io.on('connection', socket => {
-  socket.on('add', data => {
-      console.log(data)
-      // products.push(data)
-      const product = {
-        name:data.name,
-        price:data.price,
-        thumbnail:data.thumbnail,
-        username:data.username
-      }
-      contenedorProducts.save(product)
-      io.sockets.emit('show', `ok`)
-  })
+// io.on('connection', socket => {
+//   socket.on('add', data => {
+//       console.log(data)
+//       // products.push(data)
+//       const product = {
+//         name:data.name,
+//         price:data.price,
+//         thumbnail:data.thumbnail,
+//         username:data.username
+//       }
+//       contenedorMariaDB.save(product)
+//       io.sockets.emit('show', `ok`)
+//   })
 
-  socket.on('chat-in', data => {
-    const dateString = new Date().toLocaleString()
-    const dataOut = {
-        msn: data.msn,
-        username: data.username,
-        date: dateString
-    }
-    console.log(dataOut)
-    contenedorMessages.save(dataOut)
+//   socket.on('chat-in', data => {
+//     const dateString = new Date().toLocaleString()
+//     const dataOut = {
+//         msn: data.msn,
+//         username: data.username,
+//         date: dateString
+//     }
+//     console.log(dataOut)
+//     contenedorMessages.save(dataOut)
 
-    io.sockets.emit('chat-out', 'ok')
-})
-})
+//     io.sockets.emit('chat-out', 'ok')
+// })
+// })
