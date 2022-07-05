@@ -8,12 +8,8 @@ const app = require('../app');
 const debug = require('debug')('backend-apirestful:server');
 const http = require('http');
 const { Server } = require("socket.io");
-// const Contenedor = require('../contenedor')
-// const ContenedorMariaDB = require('../contenedorMariaDB')
+const axios = require('axios');
 
-// const contenedorMessages = new Contenedor('messages.json')
-// const contenedorProducts = new Contenedor('producs.json')
-// const contenedorMariaDB = new ContenedorMariaDB()
 
 /**
  * Get port from environment and store in Express.
@@ -101,30 +97,47 @@ function onListening() {
   debug('Listening on ' + bind);
 }
 
-// io.on('connection', socket => {
-//   socket.on('add', data => {
-//       console.log(data)
-//       // products.push(data)
-//       const product = {
-//         name:data.name,
-//         price:data.price,
-//         thumbnail:data.thumbnail,
-//         username:data.username
-//       }
-//       contenedorMariaDB.save(product)
-//       io.sockets.emit('show', `ok`)
-//   })
+io.on('connection', socket => {
+  socket.on('add', data => {
+    const product = {
+      name:data.name,
+      price:data.price,
+      thumbnail:data.thumbnail,
+      username:data.username
+    }
+    
+    axios
+    .post('http://localhost:3000/api/products/', product)
+    .then(res => {
+      console.log(`statusCode: ${res.status}`);
+    })
+    .catch(error => {
+      console.error(error);
+    });
 
-//   socket.on('chat-in', data => {
-//     const dateString = new Date().toLocaleString()
-//     const dataOut = {
-//         msn: data.msn,
-//         username: data.username,
-//         date: dateString
-//     }
-//     console.log(dataOut)
-//     contenedorMessages.save(dataOut)
+    io.sockets.emit('show', `ok`)
+  })
 
-//     io.sockets.emit('chat-out', 'ok')
-// })
-// })
+  socket.on('chat-in', data => {
+
+    const dataOut = {
+        msn: data.msn,
+        username: data.username
+    }
+    console.log(dataOut)
+
+    axios
+    .post('http://localhost:3000/api/chat/', dataOut)
+    .then(res => {
+      console.log(`statusCode: ${res.status}`);
+    })
+    .catch(error => {
+      console.error(error);
+    });
+
+    io.sockets.emit('show', `ok`)
+  })
+
+    io.sockets.emit('chat-out', 'ok')
+})
+})

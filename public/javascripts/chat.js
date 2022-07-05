@@ -14,7 +14,7 @@ const socket = io()
 
 btn.onclick = e => {
     e.preventDefault() 
-
+    console.log('prueba de click load')
     const name = document.getElementById("name").value
     const price = document.getElementById("price").value
     const thumbnail = document.getElementById("thumbnail").value
@@ -43,7 +43,7 @@ socket.on('show', products => {
 })
 
 socket.on('chat-out', () => {
-    fetch('/api/chat/messages')
+    fetch('/api/chat/')
         .then(r => r.text())
         .then(html => {
             const div = document.getElementById("chat")
