@@ -140,4 +140,3 @@ io.on('connection', socket => {
 
     io.sockets.emit('chat-out', 'ok')
 })
-})
