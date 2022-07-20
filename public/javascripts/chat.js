@@ -46,6 +46,7 @@ socket.on('chat-out', () => {
     fetch('/api/chat/')
         .then(r => r.text())
         .then(html => {
+            console.log("chat-out",html)
             const div = document.getElementById("chat")
             div.innerHTML = html
         })
